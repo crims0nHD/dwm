@@ -6,37 +6,37 @@
 #include <X11/Xutil.h>
 
 int main(void) {
-	Display *d;
-	Window r, f, t = None;
+	Display *display;
+	Window rootWindow, f, t = None;
 	XSizeHints h;
-	XEvent e;
+	XEvent event;
 
-	d = XOpenDisplay(NULL);
-	if (!d)
+	display = XOpenDisplay(NULL);
+	if (!display)
 		exit(1);
-	r = DefaultRootWindow(d);
+	rootWindow = DefaultRootWindow(display);
 
-	f = XCreateSimpleWindow(d, r, 100, 100, 400, 400, 0, 0, 0);
+	f = XCreateSimpleWindow(display, rootWindow, 100, 100, 400, 400, 0, 0, 0);
 	h.min_width = h.max_width = h.min_height = h.max_height = 400;
 	h.flags = PMinSize | PMaxSize;
-	XSetWMNormalHints(d, f, &h);
-	XStoreName(d, f, "floating");
-	XMapWindow(d, f);
+	XSetWMNormalHints(display, f, &h);
+	XStoreName(display, f, "floating");
+	XMapWindow(display, f);
 
-	XSelectInput(d, f, ExposureMask);
+	XSelectInput(display, f, ExposureMask);
 	while (1) {
-		XNextEvent(d, &e);
+		XNextEvent(display, &event);
 
 		if (t == None) {
 			sleep(5);
-			t = XCreateSimpleWindow(d, r, 50, 50, 100, 100, 0, 0, 0);
-			XSetTransientForHint(d, t, f);
-			XStoreName(d, t, "transient");
-			XMapWindow(d, t);
-			XSelectInput(d, t, ExposureMask);
+			t = XCreateSimpleWindow(display, rootWindow, 50, 50, 100, 100, 0, 0, 0);
+			XSetTransientForHint(display, t, f);
+			XStoreName(display, t, "transient");
+			XMapWindow(display, t);
+			XSelectInput(display, t, ExposureMask);
 		}
 	}
 
-	XCloseDisplay(d);
+	XCloseDisplay(display);
 	exit(0);
 }
