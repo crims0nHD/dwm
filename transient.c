@@ -8,7 +8,7 @@
 int main(void) {
 	Display *display;
 	Window rootWindow, f, t = None;
-	XSizeHints h;
+	XSizeHints hintSize;
 	XEvent event;
 
 	display = XOpenDisplay(NULL);
@@ -16,10 +16,11 @@ int main(void) {
 		exit(1);
 	rootWindow = DefaultRootWindow(display);
 
+	//Window XCreateSimpleWindow(display, parent, x, y, width, height, border_width, border, background) 
 	f = XCreateSimpleWindow(display, rootWindow, 100, 100, 400, 400, 0, 0, 0);
-	h.min_width = h.max_width = h.min_height = h.max_height = 400;
-	h.flags = PMinSize | PMaxSize;
-	XSetWMNormalHints(display, f, &h);
+	hintSize.min_width = hintSize.max_width = hintSize.min_height = hintSize.max_height = 400;
+	hintSize.flags = PMinSize | PMaxSize;
+	XSetWMNormalHints(display, f, &hintSize);
 	XStoreName(display, f, "floating");
 	XMapWindow(display, f);
 
