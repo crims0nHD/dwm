@@ -2130,23 +2130,42 @@ zoom(const Arg *arg)
 int
 main(int argc, char *argv[])
 {
+	//Check arguments
 	if (argc == 2 && !strcmp("-v", argv[1]))
 		die("dwm-"VERSION);
 	else if (argc != 1)
 		die("usage: dwm [-v]");
+
+	//Check locale
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
 		fputs("warning: no locale support\n", stderr);
+
+	//Check if Display can be opened
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("dwm: cannot open display");
+
+	//Check if another wm is running
 	checkotherwm();
+
+	//Time for setup :)
 	setup();
+
+	//BSD stuff??? (needs investigation)
 #ifdef __OpenBSD__
 	if (pledge("stdio rpath proc exec", NULL) == -1)
 		die("pledge");
 #endif /* __OpenBSD__ */
+
+	//TODO
 	scan();
+
+	//TODO: Investigate
 	run();
+
+	//cleanup and closing of displays
 	cleanup();
 	XCloseDisplay(dpy);
+
+	//End
 	return EXIT_SUCCESS;
 }

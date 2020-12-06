@@ -31,9 +31,16 @@ int main(void) {
 		if (t == None) {
 			sleep(5);
 			t = XCreateSimpleWindow(display, rootWindow, 50, 50, 100, 100, 0, 0, 0);
+			
+			//int XSetTransientForHint(Display *display, Window w, Window prop_window);
 			XSetTransientForHint(display, t, f);
+
+			//int XStoreName(Display *display, Window w, char *window_name);	
 			XStoreName(display, t, "transient");
+
+			//int XMapWindow(Display *display, Window w);
 			XMapWindow(display, t);
+
 			XSelectInput(display, t, ExposureMask);
 		}
 	}
