@@ -3,15 +3,15 @@
 /* appearance */
 static const unsigned int borderpx = 1; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
-static const int showbar = 1;           /* 0 means no bar */
+static const int showbar = 0;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 static const char *fonts[] = {"monospace:size=10"};
 static const char dmenufont[] = "monospace:size=10";
-static const char col_1[] = "#6D0299";
-static const char col_2[] = "#702CD1";
-static const char col_3[] = "#6298F7";
-static const char col_4[] = "#360260";
-static const char col_5[] = "#B61F9C";
+static const char col_1[] = "#6D0299"; //Dark Purple
+static const char col_2[] = "#702CD1"; //Purple
+static const char col_3[] = "#6298F7"; //Light Blue
+static const char col_4[] = "#360260"; //Darker Purple
+static const char col_5[] = "#B61F9C"; //Violet
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_3, col_1, col_2},
@@ -28,8 +28,11 @@ static const Rule rules[] = {
      */
     /* class      instance    title       tags mask     isfloating   monitor */
     {"Gimp", NULL, NULL, 0, 1, -1},
-    {"Firefox", NULL, NULL, 1 << 8, 0, -1},
+    //{"Firefox", NULL, NULL, 1 << 8, 0, -1},
 };
+
+//Gaps
+static const int gappx = 5;
 
 /* layout(s) */
 static const float mfact = 0.55; /* factor of master area size [0.05..0.95] */
@@ -59,11 +62,19 @@ static const Layout layouts[] = {
   }
 
 /* commands */
+//rofi
+static const char *dmenucmd[] = {"rofi", "-show", "drun", "-modi", "drun,file-browser", "-font", "monospace 10", 
+	"-theme", "solarized-dark", NULL};
+
+//dmenu
 static char dmenumon[2] =
-    "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {"dmenu_run", "-m",  dmenumon, "-fn", dmenufont,
+    "0"; // component of dmenucmd, manipulated in spawn() 
+/*static const char *dmenucmd[] = {"dmenu_run", "-m",  dmenumon, "-fn", dmenufont,
                                  "-nb",       col_1, "-nf",    col_3, "-sb",
                                  col_5,       "-sf", col_4,    NULL};
+*/
+
+//Terminal
 static const char *termcmd[] = {"st", NULL};
 
 static Key keys[] = {

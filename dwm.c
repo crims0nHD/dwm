@@ -268,6 +268,7 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root, wmcheckwin;
+static int globalborder;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -1278,10 +1279,25 @@ resizeclient(Client *c, int x, int y, int w, int h)
 {
 	XWindowChanges wc;
 
-	c->oldx = c->x; c->x = wc.x = x;
-	c->oldy = c->y; c->y = wc.y = y;
-	c->oldw = c->w; c->w = wc.width = w;
-	c->oldh = c->h; c->h = wc.height = h;
+	if(c->isfloating || selmon->lt[selmon->sellt]->arrange==NULL)
+	{
+		globalborder = 0; 
+	}
+	else{
+		if(selmon->lt[selmon->sellt]->arrange == monocle)
+		{
+			globalborder = 0 - borderpx;
+		}
+		else{
+			globalborder = gappx;
+		}
+	}
+
+	c->oldx = c->x; c->x = wc.x = x + globalborder;
+	c->oldy = c->y; c->y = wc.y = y + globalborder;
+	c->oldw = c->w; c->w = wc.width = w - 2 * globalborder;
+	c->oldh = c->h; c->h = wc.height = h - 2 * globalborder;
+
 	wc.border_width = c->bw;
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
@@ -1690,12 +1706,12 @@ tile(Monitor *m)
 			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
 			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
 			if (my + HEIGHT(c) < m->wh)
-				my += HEIGHT(c);
+				my += HEIGHT(c) + 2*globalborder;
 		} else {
 			h = (m->wh - ty) / (n - i);
 			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
 			if (ty + HEIGHT(c) < m->wh)
-				ty += HEIGHT(c);
+				ty += HEIGHT(c) + 2*globalborder;
 		}
 }
 
