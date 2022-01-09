@@ -63,8 +63,7 @@ static const Layout layouts[] = {
 
 /* commands */
 //rofi
-static const char *dmenucmd[] = {"rofi", "-show", "drun", "-modi", "drun,file-browser", "-font", "monospace 10", 
-	"-theme", "solarized-dark", NULL};
+static const char *dmenucmd[] = {"rofi", "-show", "drun", "-modi", "drun,filebrowser", "-font", "monospace 10", NULL};
 
 //dmenu
 static char dmenumon[2] =
@@ -75,7 +74,7 @@ static char dmenumon[2] =
 */
 
 //Terminal
-static const char *termcmd[] = {"st", NULL};
+static const char *termcmd[] = {"kitty", NULL};
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
