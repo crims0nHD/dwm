@@ -23,6 +23,7 @@
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
+#include "bars.h"
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
@@ -498,11 +499,15 @@ drawbar(Monitor *m, Bar* b)
 void
 drawbars(void)
 {
-	Monitor *m;
+/*	Monitor *m;
 	for (m = mons; m; m = m->next)
 		for(unsigned int i_b = 0; bars[i_b]; i_b++){
 			drawbar(m, bars[i_b]);
-		}
+
+			} */
+	Monitor *m;
+	for(m=mons; m; m = m->next){
+		mon_draw_bars(m, bars);
 }
 
 void

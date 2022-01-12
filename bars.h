@@ -5,20 +5,24 @@
 
 enum {BarPosTop, BarPosRight, BarPosBottom, BarPosLeft}; /* Bar positions */
 enum {
-	BarAppletTags = 0b1,
-	BarAppletWindows = 0b10,
-	BarAppletClock = 0b100,
+	BarAppletTags,
+	BarAppletWindowLayout,
+	BarAppletWindows,
+	BarAppletClock,
+	BarAppletDWMVersionNumber,
 };
 
 typedef struct BarApplet {
 	union {
-		struct BarApplet* group;
+		struct BarApplet** group;
+		unsigned int group_c;
 		unsigned int applet;
 	};
 	unsigned int isGroup;
 	unsigned int padding_inner;
 	unsigned int padding_start;
 	unsigned int padding_end;
+	unsigned int option; /* Type dependent */
 } BarApplet;
 
 typedef struct {
