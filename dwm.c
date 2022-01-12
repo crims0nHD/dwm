@@ -446,7 +446,7 @@ dirtomon(int dir)
 }
 
 void
-drawbar(Monitor *m)
+drawbar(Monitor *m, Bar* b)
 {
 	int x, w, tw = 0;
 	int boxs = drw->fonts->h / 9;
@@ -499,9 +499,10 @@ void
 drawbars(void)
 {
 	Monitor *m;
-
 	for (m = mons; m; m = m->next)
-		drawbar(m);
+		for(unsigned int i_b = 0; bars[i_b]; i_b++){
+			drawbar(m, bars[i_b]);
+		}
 }
 
 void

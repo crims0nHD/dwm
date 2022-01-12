@@ -4,8 +4,8 @@
 /* appearance */
 static const unsigned int borderpx = 1; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
-static const int showbar = 1;           /* 0 means no bar */
-static const int topbar = 1;            /* 0 means bottom bar */
+//static const int showbar = 1;           /* 0 means no bar */
+//static const int topbar = 1;            /* 0 means bottom bar */
 static const char *fonts[] = {"monospace:size=10"};
 static const char dmenufont[] = "monospace:size=10";
 static const char col_1[] = "#6D0299"; //Dark Purple
@@ -124,4 +124,26 @@ static Button buttons[] = {
     {ClkTagBar, 0, Button3, toggleview, {0}},
     {ClkTagBar, MODKEY, Button1, tag, {0}},
     {ClkTagBar, MODKEY, Button3, toggletag, {0}},
+};
+
+static BarApplet topbar_applet1 ={
+		.isGroup = 0,
+		.padding_inner = 2,
+		.padding_start = 2,
+		.padding_end = 2,
+		.applet = BarAppletTags,
+};
+
+static int topbar_monitors[] = {0, 1, -1};
+
+static Bar topbar = {
+	.position = BarPosTop,
+	.applet_s = &topbar_applet1,
+	.applet_e = NULL,
+	.monitors = topbar_monitors,
+};
+
+static Bar *bars[] = {
+	&topbar,
+	NULL
 };
